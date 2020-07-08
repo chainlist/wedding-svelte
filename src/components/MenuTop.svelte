@@ -82,6 +82,6 @@ import { _ } from 'svelte-i18n';
   <div id="controls">{$_('wedding')}</div>
   <div id="rubies">
     <img src="assets/64px-BotW_Heart_Container_Icon.png" alt="" />
-    05/05/2020
+    24/04/2021
   </div>
 </div>

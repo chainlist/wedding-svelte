@@ -1,7 +1,19 @@
 <script>
 import { _ } from 'svelte-i18n';
 import { selectedCard } from '../store';
+import { fade } from 'svelte/transition';
+import Writting from './Writting.svelte';
 
+let transitionTrigger = false;
+
+selectedCard.subscribe(() => {
+  transitionTrigger = false;
+  setTimeout(() => {
+    transitionTrigger = true;
+  }, 100);
+});
+
+$: descr = $_($selectedCard.description);
 </script>
 
 <div id="character">
@@ -10,10 +22,10 @@ import { selectedCard } from '../store';
     alt="" />
   <div class="details">
     <div class="blue-border" />
-    <h1>{$_($selectedCard.name)}</h1>
-    <div class="description">
-      {$_($selectedCard.description)}
-    </div>
+      <h1 >{$_($selectedCard.name)}</h1>
+      <div class="description">
+        <Writting text={descr} />
+      </div>
   </div>
 </div>
 
@@ -33,6 +45,7 @@ import { selectedCard } from '../store';
 
     justify-content: flex-end;
     align-items: flex-end;
+    font-style: italic;
   }
 
   #character .details {
@@ -49,9 +62,10 @@ import { selectedCard } from '../store';
     padding: 20px;
     font-size: 1.25rem;
     width: 90%;
-    max-height: 200px;
+    height: 200px;
 
     transition: max-height .2s ease-in-out;
+    padding-left: 30px;
   }
 
   #character .details h1 {

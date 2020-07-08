@@ -1,12 +1,15 @@
 <script>
 import { locale } from 'svelte-i18n';
 import { onMount } from 'svelte';
-import { cards } from '../store';
+import { cards, selectedCard } from '../store';
+import { playAudio } from '../utils/playAudio';
+import debounce from 'lodash.debounce';
+
+const selectAudio = new Audio('/assets/select.mp3');
 
 let selector = null;
 let selectorCoord = null;
 let lastHovered = null;
-let selectedCard = null;
 
 onMount(() => {
   selectorCoord = selector.getBoundingClientRect();
@@ -16,18 +19,46 @@ function mouseEnter($e, card) {
   const cardElement = $e.target;
   const coord = cardElement.getBoundingClientRect();
   selector.style.display = 'inline-block';
-  selector.style.top = `${coord.top - selectorCoord.top}px`;
-  selector.style.left = `${coord.left - selectorCoord.left}px`;
+  selector.style.top = `${coord.top + window.scrollY}px`;
+  selector.style.left = `${coord.left + window.scrollX}px`;
 
-  lastHovered = card;
+
+  if (lastHovered) {
+    lastHovered.element.classList.remove('hovered');
+  }
+
+  playAudio('item');
+  lastHovered = { element: cardElement, card };
+  cardElement.classList.add('hovered');
 }
 
 function selectCard() {
-  cards.selectCard(lastHovered);
-  locale.set('es');
+  if (lastHovered.card !== $selectedCard) {
+    selectAudio.play();
+  }
+  cards.selectCard(lastHovered.card);
+}
+
+// Added debouncing to avoid transition stuttering
+const addTransition = debounce((el) => el.classList.remove('notransition'), 50);
+
+function handleResize($event) {
+  if (!lastHovered) return;
+  const el = lastHovered.element;
+
+  // delete transition to avoid "laging" effect
+  selector.classList.add('notransition');
+
+  const coord = el.getBoundingClientRect();
+  selector.style.left = `${coord.left + window.scrollX}px`;
+  selector.style.top = `${coord.top + window.scrollY}px`;
+
+  addTransition(selector);
 }
 </script>
 
+<!-- svelte-ignore css-unused-selector -->
+<svelte:window on:resize={handleResize} on:scroll={handleResize}/>
 <div id="items-container">
   <div id="items-menu" />
   <div id="items">
@@ -49,7 +80,7 @@ function selectCard() {
     <div class="item card empty" />
     <div class="item card empty" />
     <div class="item card empty" />
-    <div class="item-selector" bind:this={selector}  on:click={selectCard} >
+    <div class="item-selector " bind:this={selector}  on:click={selectCard} >
       <div class="arrow-top-left" />
       <div class="arrow-top-right" />
       <div class="arrow-bottom-right" />
@@ -82,10 +113,17 @@ function selectCard() {
 }
 
 .item-selector {
-    position: relative;
+    position: absolute;
     background-color: transparent;
-    border: 2px solid #E3E6CF;
+    width: 110px;
+    height: 110px;
+    border: 1px solid #E3E6CF;
     transition: top .150s ease, left .150s ease;
+    cursor: pointer;
+}
+
+.notransition {
+  transition: none;
 }
 
 .item-selector .arrow-top-left {
@@ -96,6 +134,7 @@ function selectCard() {
     border-style: solid;
     border-width: 13px 13px 0 0;
     border-color: #E3E6CF transparent transparent transparent;
+    animation: arrow-top-left .3s alternate infinite ease-in-out;
 }
 
 .item-selector .arrow-top-right {
@@ -106,6 +145,7 @@ function selectCard() {
     border-style: solid;
     border-width: 0 13px 13px 0;
     border-color: transparent #E3E6CF transparent transparent;
+    animation: arrow-top-right .3s alternate infinite ease-in-out;
 }
 
 .item-selector .arrow-bottom-right {
@@ -117,6 +157,7 @@ function selectCard() {
     border-width: 0 0 13px 13px;
     border-color: transparent transparent #E3E6CF transparent;
     z-index: 6;
+    animation: arrow-bottom-right .3s alternate infinite ease-in-out;
 }
 
 
@@ -128,14 +169,14 @@ function selectCard() {
     border-style: solid;
     border-width: 13px 0 0 13px;
     border-color: transparent transparent transparent #E3E6CF;
+    animation: arrow-bottom-left .3s alternate infinite ease-in-out;
 }
-
 
 .card {
     background-color: rgba(2, 2, 2, .3);
     position: relative;
     border-radius: 5px;
-    transition: background-color 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+    transition: background-color 0.1s ease-in-out, box-shadow 0.20s ease-in-out;
 
     display: flex;
     justify-content: center;
@@ -151,6 +192,10 @@ function selectCard() {
 
 .card.empty:after {
     border: 1px solid rgba(255, 255, 255, .3);
+}
+
+:global(.hovered) {
+  box-shadow: 0px 0px 20px 2px #E3E6CF;
 }
 
 .card:after {
@@ -216,5 +261,55 @@ function selectCard() {
     border: 1px solid #E3E6CF;
     border-radius: 2px;
     z-index: 5;
+}
+
+@keyframes arrow-top-left {
+  from {
+    top: 0px;
+    left: 0px;
+  }
+
+  to {
+    top: -5px;
+    left: -5px;
+  }
+}
+
+
+@keyframes arrow-top-right {
+  from {
+    top: 0px;
+    right: 0px;
+  }
+
+  to {
+    top: -5px;
+    right: -5px;
+  }
+}
+
+
+@keyframes arrow-bottom-right {
+  from {
+    bottom: 0px;
+    right: 0px;
+  }
+
+  to {
+    bottom: -5px;
+    right: -5px;
+  }
+}
+
+@keyframes arrow-bottom-left {
+  from {
+    bottom: 0px;
+    left: 0px;
+  }
+
+  to {
+    bottom: -5px;
+    left: -5px;
+  }
 }
 </style>

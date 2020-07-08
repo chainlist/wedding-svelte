@@ -11,8 +11,6 @@ addMessages('fr-CA', fr);
 addMessages('es', es);
 addMessages('es-MX', es);
 
-console.log(getLocaleFromNavigator());
-
 init({
   fallbackLocale: 'en',
   initialLocale: getLocaleFromNavigator()

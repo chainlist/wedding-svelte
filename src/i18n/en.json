@@ -5,5 +5,7 @@
   "loneWarriorName": "Lone Warrior",
   "loneWarriorDesc": "This item provides the capacity to come alone at the wedding",
   "familyName": "Family",
-  "familyDesc": "Powerful item, let you come with a plus one and children"
+  "familyDesc": "Powerful item, let you come with a plus one and children",
+  "shieldName": "Home Sweet Home",
+  "shieldDesc": "This item let you refuse the invitation. No problem, we won't be mad (a bit)"
 }

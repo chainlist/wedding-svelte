@@ -6,25 +6,35 @@
 
   let element;
   let i = 0;
+  let interval = null;
 
   function write(txt, reset = false) {
     if (!element) return;
-
-    if (reset) {
-      element.innerHTML = '';
-      i = 0;
-    }
-
+  
     if (i < txt.length) {
       element.innerHTML += txt.charAt(i);
       i++;
-      setTimeout(() => write(txt), speed);
+    } else {
+      stopWritting();
     }
   }
 
-  onMount(() => write(text));
+  $: startWritting(text);
 
-  $: write(text, true);
+  onMount(() => startWritting(text));
+
+  function startWritting(txt) {
+    stopWritting();
+    if (!element) return;
+
+    i = 0;
+    element.innerHTML = '';
+    interval = setInterval(() => write(txt), speed);
+  }
+
+  function stopWritting() {
+   clearInterval(interval);
+  }
 </script>
 
 <span bind:this={element}></span>

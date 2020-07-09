@@ -5,5 +5,7 @@
   "loneWarriorName": "Guerrero solitario",
   "loneWarriorDesc": "Este artículo da la capacidad de venir solo a la boda",
   "familyName": "Familia",
-  "familyDesc": "Artículo poderoso, te permite venir con alguien y niños"
+  "familyDesc": "Artículo poderoso, te permite venir con alguien y niños",
+  "shieldName": "Hogar Dulce Hogar",
+  "shieldDesc": "Este artículo te permite rechazar la invitación. No hay problema, no nos enojaremos (un poco)"
 }

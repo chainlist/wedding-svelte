@@ -16,8 +16,10 @@ import { _ } from 'svelte-i18n';
       font-size: 1.75rem;
       color: red;
       padding-left: 13%;
-      padding-top: 5%;
       padding-right: 3%;
+      display: flex;
+      height: 100%;
+      align-items: center;
     }
 
     #hearts ul {
@@ -27,11 +29,14 @@ import { _ } from 'svelte-i18n';
       }
     }
     #controls {
-      padding-top: 6.5%;
       font-size: 2.75rem;
       text-align: center;
       font-style: italic;
       font-weight: bold;
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
     }
 
     #rubies {

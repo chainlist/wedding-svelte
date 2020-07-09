@@ -1,6 +1,7 @@
 <script>
 	import MenuTop from './components/MenuTop.svelte';
-	import Inventory from './components/Inventory.svelte';
+  import Inventory from './components/Inventory.svelte';
+  import Map from './components/Map.svelte';
 	import Character from './components/Character.svelte';
 	import MenuBottom from './components/MenuBottom.svelte';
 </script>
@@ -9,7 +10,7 @@
 <main id="app">
 	<MenuTop />
   <Inventory />
-  <Character />
+  <Character /> 
   <MenuBottom />
 </main>
 
@@ -17,6 +18,7 @@
 #background{
     position: absolute;
     z-index: -1;
+    // background-image: url("../assets/bg.jpg");
     background-image: url("../assets/WhatsApp\ Image\ 2020-06-01\ at\ 01.46.54.jpeg");
     background-size: cover;
     background-position-y: -200px;
@@ -34,7 +36,7 @@
                          "items character"
                          "bottom bottom";
 
-    grid-template-rows: 15% 2fr 12%;
+    grid-template-rows: 15% 1fr 10%;
     grid-template-columns: 1fr 1fr;
 }
 </style>

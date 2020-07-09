@@ -1,28 +1,27 @@
 <script>
 import { _ } from 'svelte-i18n';
-import { selectedCard } from '../store';
+import { hoveredItem, hoveredCard } from '../store';
 import { fade } from 'svelte/transition';
 import Writting from './Writting.svelte';
 
 let transitionTrigger = false;
 
-selectedCard.subscribe(() => {
+hoveredItem.subscribe(() => {
   transitionTrigger = false;
   setTimeout(() => {
     transitionTrigger = true;
   }, 100);
 });
 
-$: descr = $_($selectedCard.description);
+$: name = $_($hoveredCard.name)
+$: descr = $_($hoveredCard.description);
 </script>
 
 <div id="character">
-  <img
-    src="assets/WhatsApp_Image_2020-06-10_at_20-removebg-preview.png"
-    alt="" />
+  <img src="assets/WhatsApp_Image_2020-06-10_at_20-removebg-preview.png"alt="" />
   <div class="details">
     <div class="blue-border" />
-      <h1 >{$_($selectedCard.name)}</h1>
+      <h1 >{name}</h1>
       <div class="description">
         <Writting text={descr} />
       </div>
@@ -46,6 +45,11 @@ $: descr = $_($selectedCard.description);
     justify-content: flex-end;
     align-items: flex-end;
     font-style: italic;
+
+    img {
+      max-width: 50%;
+      height: auto;
+    }
   }
 
   #character .details {
@@ -57,12 +61,12 @@ $: descr = $_($selectedCard.description);
       rgba(255, 255, 255, 0) 100%
     );
 
-    bottom: 50px;
+    bottom: 40px;
 
     padding: 20px;
     font-size: 1.25rem;
-    width: 90%;
-    height: 200px;
+    width: 95%;
+    height: 13vw;
 
     transition: max-height .2s ease-in-out;
     padding-left: 30px;
@@ -72,12 +76,13 @@ $: descr = $_($selectedCard.description);
     display: inline-block;
     border-bottom: 2px solid rgba(255, 255, 255, 0.3);
     margin-bottom: 10px;
-    font-size: 3rem;
+    font-size: 2.5rem;
     width: 50%;
   }
 
   #character .details .description {
-    width: 40%;
+    font-size: 1.7rem;
+    width: 55%;
   }
 
   #character .details:before {

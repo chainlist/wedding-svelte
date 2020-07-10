@@ -28,8 +28,8 @@
   const addTransition = debounce((el) => el.classList.remove('notransition'), 50);
 
   function handleResize($event) {
-    if (!hoveredItem) return;
-    const el = hoveredItem.element;
+    if (!$hoveredItem) return;
+    const el = $hoveredItem.element;
 
     // delete transition to avoid "laging" effect
     selector.classList.add('notransition');
@@ -106,6 +106,10 @@
     border-width: 0.8vw 0 0 0.8vw;
     border-color: transparent transparent transparent #E3E6CF;
     animation: arrow-bottom-left .3s alternate infinite ease-in-out;
+}
+
+:global(.notransition) {
+  transition: none;
 }
 
 @keyframes arrow-top-left {

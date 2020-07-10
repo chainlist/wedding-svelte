@@ -50,6 +50,11 @@ import { _ } from 'svelte-i18n';
       height: 100%;
       align-items: center;
       justify-content: flex-end;
+
+      img {
+        width: 3.6vw;
+        height: 3.6vw;
+      }
     }
   }
 </style>

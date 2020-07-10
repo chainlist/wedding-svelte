@@ -29,7 +29,7 @@
 
     ul {
       list-style: none;
-      border-bottom: 0.1vw solid rgba(#efefef, .4);
+      // border-bottom: 0.1vw solid rgba(#efefef, .4);
 
       li {
         display: inline-flex;
@@ -37,6 +37,7 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
+        transition: opacity .15s ease-in-out;
 
         width: 2.8vw;
         height: 2.8vw;
@@ -63,8 +64,8 @@
         }
 
         img {
-          width: auto;
-          max-height: 100%;
+          max-width: auto;
+          height: 2.84vw;
         }
 
         &:hover {

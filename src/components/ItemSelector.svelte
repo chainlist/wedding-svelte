@@ -1,25 +1,29 @@
 
 <script>
-  import { cards, hoveredItem, selectedCard } from '../store';
+  export let cards =  null;
+  export let hoveredItem = null;
+  export let selectedCard = null;
+
+  import { onMount, onDestroy } from 'svelte';
   import { playAudio } from '../utils/playAudio';
   import debounce from 'lodash.debounce';
+  import { hoveredCard } from '../store/guests';
 
-  const selectAudio = new Audio('/assets/select.mp3');
   let selector = null;
 
-  hoveredItem.subscribe(item => {
+  const unsub = hoveredItem.subscribe(item => {
     if (!item.element) return;
 
     const coord = item.element.getBoundingClientRect();
-    playAudio('item');
-    selector.style.top = `${coord.top + window.scrollY}px`;
-    selector.style.left = `${coord.left + window.scrollX}px`;
+    if (selector) {
+      selector.style.top = `${item.element.offsetTop + window.scrollY}px`;
+      selector.style.left = `${item.element.offsetLeft + window.scrollX}px`;
+    }
   });
-
   
   function selectCard() {
     if ($hoveredItem.card !== $selectedCard) {
-      selectAudio.play();
+      playAudio('select');
     }
     cards.selectCard($hoveredItem.card);
   }
@@ -29,27 +33,32 @@
 
   function handleResize($event) {
     if (!$hoveredItem) return;
-    const el = $hoveredItem.element;
+    const item = $hoveredItem.element;
 
     // delete transition to avoid "laging" effect
     selector.classList.add('notransition');
 
-    const coord = el.getBoundingClientRect();
-    selector.style.left = `${coord.left + window.scrollX}px`;
-    selector.style.top = `${coord.top + window.scrollY}px`;
+    // const coord = el.getBoundingClientRect();
+    selector.style.left = `${item.offsetLeft + window.scrollX}px`;
+    selector.style.top = `${item.offsetTop + window.scrollY}px`;
 
     addTransition(selector);
   }
+
+  onDestroy(() => {
+    unsub();
+  });
 </script>
 
 <svelte:window on:resize={handleResize} on:scroll={handleResize}/>
-
-<div class="item-selector " bind:this={selector}  on:click={selectCard} >
-  <div class="arrow-top-left" />
-  <div class="arrow-top-right" />
-  <div class="arrow-bottom-right" />
-  <div class="arrow-bottom-left" />
-</div>
+{#if $hoveredItem.element}
+  <div class="item-selector " bind:this={selector}  on:click={selectCard} >
+    <div class="arrow-top-left" />
+    <div class="arrow-top-right" />
+    <div class="arrow-bottom-right" />
+    <div class="arrow-bottom-left" />
+  </div>
+{/if}
 
 <style lang="scss">
 .item-selector {
@@ -159,6 +168,36 @@
   to {
     bottom: -5px;
     left: -5px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .item-selector {
+      position: absolute;
+      background-color: transparent;
+      width: 7.7vh;
+      height: 7.7vh;
+      border: 1px solid #E3E6CF;
+      transition: top .150s ease, left .150s ease;
+      cursor: pointer;
+  }
+
+  
+  .item-selector .arrow-top-left {
+      border-width: 0.8vh 0.8vh 0 0;
+  }
+
+  .item-selector .arrow-top-right {
+      border-width: 0 0.8vh 0.8vh 0;
+  }
+
+  .item-selector .arrow-bottom-right {
+      border-width: 0 0 0.8vh 0.8vh;
+  }
+
+
+  .item-selector .arrow-bottom-left {
+      border-width: 0.8vh 0 0 0.8vh;
   }
 }
 </style>

@@ -1,8 +1,9 @@
 <script>
 import { _ } from 'svelte-i18n';
-import { hoveredItem, hoveredCard } from '../store';
+import { hoveredItem, hoveredCard, form } from '../store';
 import { fade } from 'svelte/transition';
 import Writting from './Writting.svelte';
+import { typewriter } from '../utils/transitions/typewriter';
 
 let transitionTrigger = false;
 
@@ -13,19 +14,35 @@ hoveredItem.subscribe(() => {
   }, 100);
 });
 
-$: name = $_($hoveredCard.name)
-$: descr = $_($hoveredCard.description);
+
+let name = '';
+$: if ($hoveredCard) {
+  name = $_($hoveredCard.name);
+};
+
+let descr = '';
+$: if ($hoveredCard) {
+  descr = $_($hoveredCard.description);
+};
+
 </script>
 
 <div id="character">
+  <h2>
+    I'm going to the wedding <span class="formText" use:active={{ path: /^\/(guest)?$/, className: 'selected' }}>{$form && $form.guest ? $form.guest.form : '_______'}</span>,
+    <span class="formText" use:active={{ path: `/${menu.name}`, className: 'selected' }}>{$form && $form.travel ? $form.travel.form : '_______' }</span>
+    and I plan to <span class="formText" use:active={{ path: `/${menu.name}`, className: 'selected' }}>{$form && $form.housing ? $form.housing.form : '_______'}</span> after the wedding
+  </h2>
   <img src="assets/WhatsApp_Image_2020-06-10_at_20-removebg-preview.png"alt="" />
-  <div class="details">
-    <div class="blue-border" />
-      <h1 >{name}</h1>
-      <div class="description">
-        <Writting text={descr} />
-      </div>
-  </div>
+  {#if $hoveredCard}
+    <div class="details">
+      <div class="blue-border" />
+          <h1>{name}</h1>
+          <div class="description">
+            <Writting text={descr} />
+          </div>
+    </div>
+  {/if}
 </div>
 
 <style lang="scss">
@@ -40,15 +57,27 @@ $: descr = $_($hoveredCard.description);
       rgba(255, 255, 255, 0) 100%
     );
 
-    display: flex;
+    display: grid;
 
-    justify-content: flex-end;
-    align-items: flex-end;
     font-style: italic;
+
+    h2 {
+      margin-top: 2vw;
+      margin-left: 2vw;
+      font-size: 2rem;
+      font-weight: 400;
+    }
+
+    .formText {
+      color: #0a9af1;
+      font-weight: bold;
+    }
 
     img {
       max-width: 50%;
       height: auto;
+      justify-self: flex-end;
+      align-self: flex-end;
     }
   }
 
@@ -112,4 +141,34 @@ $: descr = $_($hoveredCard.description);
     border-right: none;
     border-radius: 2px;
   }
+
+@media only screen and (max-width: 768px) {
+  #character {
+    background: linear-gradient(
+      0deg,
+      rgba(2, 2, 2, 0.6418942577030813) 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+
+  #character .details {
+    position: absolute;
+    background: rgb(2, 2, 2, 0.2);
+    background: linear-gradient(
+      90deg,
+      rgba(2, 2, 2, 0.6418942577030813) 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
+
+    bottom: 40px;
+
+    padding: 20px;
+    font-size: 1.25rem;
+    width: 95%;
+    height: 20vh;
+
+    transition: max-height .2s ease-in-out;
+    padding-left: 30px;
+  }
+}
 </style>

@@ -1,6 +1,8 @@
 <script>
 import { _ } from 'svelte-i18n';
+import mobile from 'is-mobile';
 
+const n = new Array(mobile() ? 12 : 10);
 </script>
 
 <style lang="scss">
@@ -26,6 +28,7 @@ import { _ } from 'svelte-i18n';
       list-style: none;
       li {
         display: inline-block;
+        margin-right: 0.5vw;
       }
     }
     #controls {
@@ -57,36 +60,25 @@ import { _ } from 'svelte-i18n';
       }
     }
   }
+
+@media only screen and (max-width: 768px) {
+   #top {
+    #rubies {
+      img {
+        width: 3.6vh;
+        height: 3.6vh;
+      }
+    }
+   }
+}
 </style>
 
 <div id="top">
   <div id="hearts">
     <ul>
+      {#each n as heart}
       <li>❤</li>
-      <li>❤</li>
-      <li>❤</li>
-      <li>❤</li>
-      <li>❤</li>
-      <li>❤</li>
-      <li>❤</li>
-      <li>❤</li>
-      <li>❤</li>
-      <li>❤</li>
-      <li>❤</li>
-      <li>❤</li>
-      <li>❤</li>
-      <li>❤</li>
-      <li>❤</li>
-      <li>❤</li>
-      <li>❤</li>
-      <li>❤</li>
-      <li>❤</li>
-      <li>❤</li>
-      <li>❤</li>
-      <li>❤</li>
-      <li>❤</li>
-      <li>❤</li>
-      <li>❤</li>
+      {/each}
     </ul>
   </div>
   <div id="controls">{$_('wedding')}</div>

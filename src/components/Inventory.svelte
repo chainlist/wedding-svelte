@@ -1,34 +1,22 @@
 <script>
-import { locale } from 'svelte-i18n';
-import { onMount } from 'svelte';
-import { cards, selectedCard, hoveredItem } from '../store';
-
+import Router from 'svelte-spa-router';
 import InventoryMenu from './InventoryMenu.svelte';
-import ItemSlot from './ItemSlot.svelte';
-import ItemSelector from './ItemSelector.svelte';
+import Items from './Items.svelte';
 
-
-const n = new Array(10);
+import { routes } from '../routes';
 </script>
 
 
 <div id="items-container">
   <InventoryMenu />
-  <div id="items">
-    {#each $cards as card}
-      <ItemSlot {card} />
-    {/each}
-
-    {#each n as item }
-      <ItemSlot />
-    {/each}
-
-    <ItemSelector />
+  <div id="view">
+    <Router {routes}/>
   </div>
 </div>
 
 <style lang="scss">
 #items-container {
+    overflow: hidden;
     grid-area: items;
     width: 100%;
     background: rgb(2,2,2, .2);
@@ -37,15 +25,16 @@ const n = new Array(10);
     grid-template-rows: 8.8vw 4fr;
     padding-left: 5vw;
     padding-left: 9.4vw;
+
+    #view {
+      position: relative;
+    }
 }
 
-#items {
-    display: grid;
-    grid-gap: 0.95vw;
-    grid-template-columns: 6.7vw 6.7vw 6.7vw 6.7vw 6.7vw;
-    grid-template-rows: 6.7vw 6.7vw 6.7vw;
-    grid-auto-rows: 6.7vw;
-    grid-auto-columns: 6.7vw;
-    grid-auto-flow: row;
+@media only screen and (max-width: 768px) {
+  #items-container {
+    grid-template-rows: 8.8vh 4fr;
+    padding-left: 1.5vh;
+  }
 }
 </style>

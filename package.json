@@ -20,9 +20,11 @@
     "svelte-preprocess": "^3.9.11"
   },
   "dependencies": {
+    "is-mobile": "^2.2.2",
     "leaflet": "^1.6.0",
     "lodash.debounce": "^4.0.8",
     "sirv-cli": "^0.4.4",
-    "svelte-i18n": "^3.0.4"
+    "svelte-i18n": "^3.0.4",
+    "svelte-spa-router": "^2.2.0"
   }
 }

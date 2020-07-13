@@ -39,4 +39,15 @@
     grid-template-rows: 15% 1fr 10%;
     grid-template-columns: 1fr 1fr;
 }
+
+@media only screen and (max-width: 768px) {
+  #app {
+    grid-template-areas: "top"
+                         "items"
+                         "character"
+                         "bottom";
+    grid-template-rows: 10% 1fr 1fr 10%;
+    grid-template-columns: 1fr;
+  }
+}
 </style>

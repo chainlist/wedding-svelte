@@ -1,8 +1,10 @@
+const audios = {
+  'item': new Audio('assets/item.mp3'),
+  'select': new Audio('assets/select.mp3'),
+};
+
 
 export const playAudio = (name, ext = 'mp3') => {
-  let audio = new Audio(`/assets/${name}.${ext}`);
-  // let audio = new Audio(`/wedding-svelte/assets/${name}.${ext}`);
-  audio.play().then(() => {
-    audio = null;
-  });
-}
+  audios[name].currentTime = 0;
+  audios[name].play();
+} 

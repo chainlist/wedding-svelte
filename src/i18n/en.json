@@ -7,5 +7,8 @@
   "familyName": "Family",
   "familyDesc": "Powerful item, let you come with a plus one and children",
   "shieldName": "Home Sweet Home",
-  "shieldDesc": "This item let you refuse the invitation. No problem, we won't be mad (a bit)"
+  "shieldDesc": "This item let you refuse the invitation. No problem, we won't be mad (a bit)",
+  "guest": "Any guest?",
+  "travel": "Travel",
+  "housing": "Housing"
 }

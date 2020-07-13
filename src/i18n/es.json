@@ -7,5 +7,8 @@
   "familyName": "Familia",
   "familyDesc": "Artículo poderoso, te permite venir con alguien y niños",
   "shieldName": "Hogar Dulce Hogar",
-  "shieldDesc": "Este artículo te permite rechazar la invitación. No hay problema, no nos enojaremos (un poco)"
+  "shieldDesc": "Este artículo te permite rechazar la invitación. No hay problema, no nos enojaremos (un poco)",
+  "guest": "Cualquier invitado ?",
+  "travel": "Viaje",
+  "housing": "Vivienda"
 }

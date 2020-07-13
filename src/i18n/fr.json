@@ -7,5 +7,8 @@
   "familyName": "Famille",
   "familyDesc": "Puissant item, avec celui-ci vous pouvez venir avec un plus un et des enfants",
   "shieldName": "Nid Douillet",
-  "shieldDesc": "Cet objet vous permettra de refuser l'invitation. Aucun soucis, on ne vous en voudra pas (un peu)"
+  "shieldDesc": "Cet objet vous permettra de refuser l'invitation. Aucun soucis, on ne vous en voudra pas (un peu)",
+  "guest": "Des invités ?",
+  "travel": "Voyage",
+  "housing": "Logement"
 }

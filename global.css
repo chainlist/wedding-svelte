@@ -11,3 +11,9 @@ html, body {
     padding: 0;
     box-sizing: border-box;
 }
+
+@media only screen and (max-width: 768px) {
+  html, body {
+    font-size: 1vh;
+  }
+}

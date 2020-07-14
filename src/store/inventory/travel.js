@@ -1,6 +1,6 @@
-import { useCards } from "./cards";
+import { createInventory } from ".";
 
-const { cards, hoveredCard, hoveredItem, selectedCard } = useCards([
+export const travelInventory = createInventory([
   {
     id: 1,
     name: "loneWarriorName",
@@ -12,7 +12,7 @@ const { cards, hoveredCard, hoveredItem, selectedCard } = useCards([
     form: 'by plane'
   },
   {
-    id: 4,
+    id: 3,
     name: "shieldName",
     description: `shieldDesc`,
     img: "assets/shield.png",
@@ -32,5 +32,3 @@ const { cards, hoveredCard, hoveredItem, selectedCard } = useCards([
     form: 'by walk'
   }
 ]);
-
-export { cards, hoveredCard, hoveredItem, selectedCard };

@@ -2,7 +2,7 @@
 import { _ } from 'svelte-i18n';
 import mobile from 'is-mobile';
 
-const n = new Array(mobile() ? 12 : 10);
+const n = new Array(mobile() ? 8 : 10);
 </script>
 
 <style lang="scss">

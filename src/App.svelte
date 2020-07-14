@@ -1,6 +1,6 @@
 <script>
 	import MenuTop from './components/MenuTop.svelte';
-  import Inventory from './components/Inventory.svelte';
+  import Inventory from './components/inventory/Inventory.svelte';
   import Map from './components/Map.svelte';
 	import Character from './components/Character.svelte';
 	import MenuBottom from './components/MenuBottom.svelte';

@@ -3,7 +3,7 @@ import Router from 'svelte-spa-router';
 import InventoryMenu from './InventoryMenu.svelte';
 import Items from './Items.svelte';
 
-import { routes } from '../routes';
+import { routes } from '../../routes';
 </script>
 
 

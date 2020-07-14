@@ -1,41 +1,42 @@
 <script>
   import { onMount } from "svelte";
-  import { hoveredItem } from '../store/cards';
-  import { playAudio } from '../utils/playAudio';
+  import { playAudio } from '../../utils/playAudio';
   import mobile from 'is-mobile';
+  import { inventory } from '../../store/inventory';
 
-  export let card = null;
-  export let cards = null;
-
+  export let item = null;
 
   let element = null;
-
+  
+  const hoveredItem = $inventory.hoveredItem;
+  const items = $inventory.items;
+  
   function hover($event) {
-    if (card) {
+    if (item) {
       const sound = mobile() ? 'select' : 'item';
       
       playAudio(sound);
-      cards.hoverCard(card, $event.target);
+      items.hoverCard(item, $event.target);
 
       // When on mobile, it's easier to hover and select (one tap)
       // than double tap (for hovering) and another one for selecting
       if (mobile()) {
-        cards.selectCard(card);
+        items.selectCard(item);
       }
     }
   }
 
-  onMount(() => {
-    if (card && card.selected) {
-      hoveredItem.set({ card, element });
+  onMount(() => { 
+    if (item && item.selected) {
+      hoveredItem.set({ item, element });
     }
   });
 </script>
 
-<div bind:this={element} class="item-slot" data-id={card && card.id}  on:mouseenter={($event) => hover($event)} class:selected={card && card.selected} class:hovered={card && card.hovered} class:empty={!card}>
-  {#if card}
-    <img src={card.img} alt="">
-    <div class="details" on:click>{card.info}</div>
+<div bind:this={element} class="item-slot" on:mouseenter={($event) => hover($event)} class:selected={item && item.selected} class:hovered={item && item.hovered} class:empty={!item}>
+  {#if item}
+    <img src={item.img} alt="">
+    <div class="details" on:click>{item.info}</div>
   {/if}
 </div>
 

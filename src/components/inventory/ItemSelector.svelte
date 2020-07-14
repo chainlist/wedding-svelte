@@ -1,16 +1,17 @@
 
 <script>
-  export let cards =  null;
-  export let hoveredItem = null;
-  export let selectedCard = null;
+  export let items =  null;
 
+  import { inventory } from '../../store/inventory';
   import { onMount, onDestroy } from 'svelte';
-  import { playAudio } from '../utils/playAudio';
+  import { playAudio } from '../../utils/playAudio';
   import debounce from 'lodash.debounce';
-  import { hoveredCard } from '../store/guests';
 
   let selector = null;
 
+  const hoveredItem = $inventory.hoveredItem;
+  const selectedCard = $inventory.selectCard;
+  
   const unsub = hoveredItem.subscribe(item => {
     if (!item.element) return;
 
@@ -20,12 +21,12 @@
       selector.style.left = `${item.element.offsetLeft + window.scrollX}px`;
     }
   });
-  
+
   function selectCard() {
-    if ($hoveredItem.card !== $selectedCard) {
+    if ($hoveredItem.item !== $selectedCard) {
       playAudio('select');
     }
-    cards.selectCard($hoveredItem.card);
+    items.selectCard($hoveredItem.item);
   }
 
   // Added debouncing to avoid transition stuttering

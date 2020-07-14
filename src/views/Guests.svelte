@@ -1,15 +1,22 @@
 <script>
-  import { cards, hoveredCard, hoveredItem } from '../store/guests';
+  import { guestInventory } from '../store/inventory/guests';
+  import { inventory } from '../store/inventory';
   import { onMount, onDestroy } from 'svelte';
-  import { form, selectedCard } from '../store';
+  import { form } from '../store';
 
-  import Items from '../components/Items.svelte';
+  import Items from '../components/inventory/Items.svelte';
 
-  const subscription = selectedCard.subscribe((card) => {
-    form.setForm('guest', card);
+  let subscription = null;
+
+  inventory.set(guestInventory);
+  
+  onMount(() => {
+    subscription = $inventory.selectedCard.subscribe((card) => {
+      form.setForm('guest', card);
+    });
   });
 
   onDestroy(() => subscription());
 </script>
 
-<Items items={cards} {hoveredItem} {selectedCard} />
+<Items items={guestInventory.items} />

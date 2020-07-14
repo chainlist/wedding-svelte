@@ -1,11 +1,18 @@
 <script>
 import { _ } from 'svelte-i18n';
-import { hoveredItem, hoveredCard, form } from '../store';
+import { form } from '../store';
 import { fade } from 'svelte/transition';
 import Writting from './Writting.svelte';
 import { typewriter } from '../utils/transitions/typewriter';
+import active from 'svelte-spa-router/active';
+import { inventory } from '../store/inventory';
+
+import { guestInventory } from '../store/inventory/guests';
+import { travelInventory } from '../store/inventory/travel';
 
 let transitionTrigger = false;
+
+const hoveredItem = $inventory.hoveredItem;
 
 hoveredItem.subscribe(() => {
   transitionTrigger = false;
@@ -14,27 +21,31 @@ hoveredItem.subscribe(() => {
   }, 100);
 });
 
+$: selectedItem = $inventory.selectedCard;
 
 let name = '';
-$: if ($hoveredCard) {
-  name = $_($hoveredCard.name);
+$: if ($selectedItem) {
+  name = $_($selectedItem.name);
 };
 
 let descr = '';
-$: if ($hoveredCard) {
-  descr = $_($hoveredCard.description);
+$: if ($selectedItem) {
+  descr = $_($selectedItem.description);
 };
 
 </script>
 
 <div id="character">
   <h2>
-    I'm going to the wedding <span class="formText" use:active={{ path: /^\/(guest)?$/, className: 'selected' }}>{$form && $form.guest ? $form.guest.form : '_______'}</span>,
-    <span class="formText" use:active={{ path: `/${menu.name}`, className: 'selected' }}>{$form && $form.travel ? $form.travel.form : '_______' }</span>
-    and I plan to <span class="formText" use:active={{ path: `/${menu.name}`, className: 'selected' }}>{$form && $form.housing ? $form.housing.form : '_______'}</span> after the wedding
+    {#if $selectedItem && $selectedItem.id !== 4}
+      I'm going to the wedding <span class="formText" use:active={{ path: /^\/(guest)?$/, className: 'highlighted' }}>{$form && $form.guest ? $form.guest.form : '_______'}</span>,
+      <span class="formText" use:active={{ path: /^\/(travel)?$/, className: 'highlighted' }}>{$form && $form.travel ? $form.travel.form : '_______' }</span>
+    {:else}
+      I'm not going to the wedding. But I will think about you really really hard! I love you both! (more Kévin)
+    {/if}
   </h2>
   <img src="assets/WhatsApp_Image_2020-06-10_at_20-removebg-preview.png"alt="" />
-  {#if $hoveredCard}
+  {#if $selectedItem}
     <div class="details">
       <div class="blue-border" />
           <h1>{name}</h1>
@@ -46,6 +57,21 @@ $: if ($hoveredCard) {
 </div>
 
 <style lang="scss">
+  :global(.highlighted) {
+    text-shadow:#E3E6CF 0 0 10px;
+    animation: pulse infinite alternate .75s;
+
+    @keyframes pulse {
+      from {
+        text-shadow: #E3E6CF 0 0 10px;
+      }
+
+      to {
+        text-shadow: rgba(#E3E6CF, .2) 0 0 10px;
+      }
+    }
+  }
+
   #character {
     position: relative;
     grid-area: character;
@@ -66,6 +92,8 @@ $: if ($hoveredCard) {
       margin-left: 2vw;
       font-size: 2rem;
       font-weight: 400;
+      transition: text-shadow .150s ease-in-out;
+      padding-right: 1vw
     }
 
     .formText {

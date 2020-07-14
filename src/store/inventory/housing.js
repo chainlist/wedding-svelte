@@ -1,6 +1,6 @@
-import { useCards } from "./cards";
+import { createInventory } from ".";
 
-const { cards, hoveredCard, hoveredItem, selectedCard } = useCards([
+export const housingInventory = createInventory([
   {
     id: 1,
     name: "loneWarriorName",
@@ -22,5 +22,3 @@ const { cards, hoveredCard, hoveredItem, selectedCard } = useCards([
     form: 'come back to my hotel'
   }
 ]);
-
-export { cards, hoveredCard, hoveredItem, selectedCard };

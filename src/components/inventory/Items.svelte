@@ -14,8 +14,6 @@
 
   let transitionOut = 'left';
   let transitionIn = 'right';
-
-  inventory
 </script>
 
 <div id="items" out:blurDir={{ dir: 'left' }} in:blurDir={{dir: 'right'}}>

@@ -13,6 +13,8 @@ import { travelInventory } from '../store/inventory/travel';
 let transitionTrigger = false;
 
 const hoveredItem = $inventory.hoveredItem;
+const notCommingCard = guestInventory.selectedCard;
+$: notComming = $notCommingCard.id === 4;
 
 hoveredItem.subscribe(() => {
   transitionTrigger = false;
@@ -37,7 +39,7 @@ $: if ($selectedItem) {
 
 <div id="character">
   <h2>
-    {#if $selectedItem && $selectedItem.id !== 4}
+    {#if !notComming}
       I'm going to the wedding <span class="formText" use:active={{ path: /^\/(guest)?$/, className: 'highlighted' }}>{$form && $form.guest ? $form.guest.form : '_______'}</span>,
       <span class="formText" use:active={{ path: /^\/(travel)?$/, className: 'highlighted' }}>{$form && $form.travel ? $form.travel.form : '_______' }</span>
     {:else}

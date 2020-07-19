@@ -115,7 +115,7 @@ import { playAudio } from '../../utils/playAudio';
         }
 
         &.arrow-right {
-          right: 1vw;
+          right: 3vw;
           animation: arrow-right .5s alternate infinite;
         }
       }

@@ -67,5 +67,10 @@
     grid-template-rows: 10% 1fr 1fr 10%;
     grid-template-columns: 1fr;
   }
+
+  
+  :global(button) {
+    padding: 1vh;
+  }
 }
 </style>

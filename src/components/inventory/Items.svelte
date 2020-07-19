@@ -56,7 +56,7 @@
   {/each}
 
   <ItemSelector />
-  <Popup bind:this={popup}>
+  <Popup bind:this={popup} cursor>
     <div slot="controls" class="controls">
       <button on:click={() => selectItem($hoveredItem.item)}>Equip</button>
       <button on:click={() => popup.close()}>Cancel</button>
@@ -80,6 +80,7 @@
     display: flex;
     width: 100%;
     flex-direction: column;
+    width: 15vw;
 
     button:not(:last-child) {
       margin-bottom: 1vw;

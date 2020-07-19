@@ -36,6 +36,10 @@ const travelSelected = travelInventory.selectedCard;
   {/if}
   <Popup bind:this={popup}>
     <h1>Response</h1>
+    <div class="answer">
+      I, hereby, Kévin Guillouard, want to attend the wedding
+      on the 24/04/2021 with all my heart.
+    </div>
     <div slot="controls" class="controls">
       <button>Send answer</button>
       <button on:click={popup.close}>Cancel</button>
@@ -80,7 +84,7 @@ const travelSelected = travelInventory.selectedCard;
       font-size: 2rem;
       font-weight: 400;
       transition: text-shadow .150s ease-in-out;
-      padding-right: 1vw
+      padding-right: 1vw;
     }
 
     .formText {
@@ -95,11 +99,20 @@ const travelSelected = travelInventory.selectedCard;
       align-self: flex-end;
     }
     
+    .answer {
+      margin-top: 1vw;
+      max-width: 25vw;
+      font-size: 2rem;
+    }
+
     .controls {
       display: flex;
       width: 100%;
       flex-direction: column;
 
+      button:first-child {
+        margin-top: 2vw;
+      }
       button:not(:last-child) {
         margin-bottom: 1vw;
       }
@@ -174,6 +187,25 @@ const travelSelected = travelInventory.selectedCard;
       rgba(2, 2, 2, 0.6418942577030813) 0%,
       rgba(255, 255, 255, 0) 100%
     );
+
+    .answer {
+      margin-top: 1vw;
+      max-width: 25vh;
+      font-size: 2rem;
+    }
+    
+    .controls {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+
+      button:first-child {
+        margin-top: 2vh;
+      }
+      button:not(:last-child) {
+        margin-bottom: 1vh;
+      }
+    }
   }
 
   #character .details {

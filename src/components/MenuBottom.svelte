@@ -15,7 +15,7 @@ Camino a Xicalco 26, San Andrés Totoltepec, Tlalpan, 14400 Ciudad de México, C
 
     justify-content: center;
     align-items: center;
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-style: italic;
     padding: 1vw;
   }
@@ -23,7 +23,6 @@ Camino a Xicalco 26, San Andrés Totoltepec, Tlalpan, 14400 Ciudad de México, C
 @media only screen and (max-width: 768px) {
   #bottom {
     grid-template-columns: 1fr;
-    font-size: 1.5rem;
     padding: 1vh;
   }
 }

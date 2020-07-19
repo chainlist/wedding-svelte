@@ -1,4 +1,6 @@
 <script>
+import { onDestroy, onMount } from 'svelte';
+
 import { _ } from 'svelte-i18n';
 import { form } from '../store';
 import { fade } from 'svelte/transition';
@@ -6,56 +8,39 @@ import Writting from './Writting.svelte';
 import { typewriter } from '../utils/transitions/typewriter';
 import active from 'svelte-spa-router/active';
 import { inventory } from '../store/inventory';
+import Popup from './Popup.svelte';
 
 import { guestInventory } from '../store/inventory/guests';
 import { travelInventory } from '../store/inventory/travel';
 
-let transitionTrigger = false;
+let popup;
 
-const hoveredItem = $inventory.hoveredItem;
-const notCommingCard = guestInventory.selectedCard;
-$: notComming = $notCommingCard.id === 4;
-
-hoveredItem.subscribe(() => {
-  transitionTrigger = false;
-  setTimeout(() => {
-    transitionTrigger = true;
-  }, 100);
-});
-
-$: selectedItem = $inventory.selectedCard;
-
-let name = '';
-$: if ($selectedItem) {
-  name = $_($selectedItem.name);
-};
-
-let descr = '';
-$: if ($selectedItem) {
-  descr = $_($selectedItem.description);
-};
+$: hoveredItem = $inventory.hoveredItem;
+$: item = $hoveredItem.item;
+let subscription = null;
+const guestSelected = guestInventory.selectedCard;
+const travelSelected = travelInventory.selectedCard;
 
 </script>
 
 <div id="character">
-  <h2>
-    {#if !notComming}
-      I'm going to the wedding <span class="formText" use:active={{ path: /^\/(guest)?$/, className: 'highlighted' }}>{$form && $form.guest ? $form.guest.form : '_______'}</span>,
-      <span class="formText" use:active={{ path: /^\/(travel)?$/, className: 'highlighted' }}>{$form && $form.travel ? $form.travel.form : '_______' }</span>
-    {:else}
-      I'm not going to the wedding. But I will think about you really really hard! I love you both! (more Kévin)
-    {/if}
-  </h2>
-  <img src="assets/WhatsApp_Image_2020-06-10_at_20-removebg-preview.png"alt="" />
-  {#if $selectedItem}
+  <img src="assets/WhatsApp_Image_2020-06-10_at_20-removebg-preview.png"alt="" on:click={popup.open} />
+  {#if item}
     <div class="details">
       <div class="blue-border" />
-          <h1>{name}</h1>
+          <h1>{$_(item.name)}</h1>
           <div class="description">
-            <Writting text={descr} />
+            <Writting text={$_(item.description)} />
           </div>
     </div>
   {/if}
+  <Popup bind:this={popup}>
+    <h1>Response</h1>
+    <div slot="controls" class="controls">
+      <button>Send answer</button>
+      <button on:click={popup.close}>Cancel</button>
+    </div>
+  </Popup>
 </div>
 
 <style lang="scss">
@@ -108,6 +93,16 @@ $: if ($selectedItem) {
       height: auto;
       justify-self: flex-end;
       align-self: flex-end;
+    }
+    
+    .controls {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+
+      button:not(:last-child) {
+        margin-bottom: 1vw;
+      }
     }
   }
 

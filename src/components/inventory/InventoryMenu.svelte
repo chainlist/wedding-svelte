@@ -3,7 +3,6 @@
   import { _ } from 'svelte-i18n';
   import active from 'svelte-spa-router/active';
   import { submenu, selectSubMenu, selectedSubmenu } from '../../store'
-
 </script>
 
 <div id="inventory-menu">

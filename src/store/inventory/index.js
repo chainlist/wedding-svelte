@@ -10,8 +10,6 @@ function createInventoryStore(value = [], hoveredItem) {
       cards.forEach(c => c.selected = c.id === item.id);
       return cards;
     });
-
-    // selectedCard.set(card);
   }
 
   function hover(item, element) {

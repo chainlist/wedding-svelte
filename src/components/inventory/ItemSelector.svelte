@@ -1,65 +1,29 @@
 
 <script>
-  export let items =  null;
-
+  import { selectorElement } from '../../store';
   import { inventory } from '../../store/inventory';
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy, setContext } from 'svelte';
   import { playAudio } from '../../utils/playAudio';
   import debounce from 'lodash.debounce';
 
   let selector = null;
 
-  const hoveredItem = $inventory.hoveredItem;
-  const selectedCard = $inventory.selectCard;
-  
-  const unsub = hoveredItem.subscribe(item => {
-    if (!item.element) return;
-
-    const coord = item.element.getBoundingClientRect();
-    if (selector) {
-      selector.style.top = `${item.element.offsetTop + window.scrollY}px`;
-      selector.style.left = `${item.element.offsetLeft + window.scrollX}px`;
-    }
+  onMount(() => {
+    selectorElement.set(selector);
   });
-
-  function selectCard() {
-    if ($hoveredItem.item !== $selectedCard) {
-      playAudio('select');
-    }
-    items.selectCard($hoveredItem.item);
-  }
+  
 
   // Added debouncing to avoid transition stuttering
   const addTransition = debounce((el) => el.classList.remove('notransition'), 50);
-
-  function handleResize($event) {
-    if (!$hoveredItem) return;
-    const item = $hoveredItem.element;
-
-    // delete transition to avoid "laging" effect
-    selector.classList.add('notransition');
-
-    // const coord = el.getBoundingClientRect();
-    selector.style.left = `${item.offsetLeft + window.scrollX}px`;
-    selector.style.top = `${item.offsetTop + window.scrollY}px`;
-
-    addTransition(selector);
-  }
-
-  onDestroy(() => {
-    unsub();
-  });
 </script>
 
-<svelte:window on:resize={handleResize} on:scroll={handleResize}/>
-{#if $hoveredItem.element}
-  <div class="item-selector " bind:this={selector}  on:click={selectCard} >
-    <div class="arrow-top-left" />
-    <div class="arrow-top-right" />
-    <div class="arrow-bottom-right" />
-    <div class="arrow-bottom-left" />
-  </div>
-{/if}
+<!-- <svelte:window on:resize={handleResize} on:scroll={handleResize}/> -->
+<div class="item-selector " bind:this={selector} >
+  <div class="arrow-top-left" />
+  <div class="arrow-top-right" />
+  <div class="arrow-bottom-right" />
+  <div class="arrow-bottom-left" />
+</div>
 
 <style lang="scss">
 .item-selector {
@@ -70,6 +34,8 @@
     border: 1px solid #E3E6CF;
     transition: top .150s ease, left .150s ease;
     cursor: pointer;
+    pointer-events: none;
+    z-index: 5;
 }
 
 .item-selector .arrow-top-left {

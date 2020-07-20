@@ -6,33 +6,33 @@ export const guestInventory = createInventory([
     name: "loneWarriorName",
     description: `loneWarriorDesc`,
     short: `loneWarriorShort`,
+    form: 'loneWarriorForm',
     img: "assets/BotW_Ancient_Short_Sword_Icon.png",
     info: 1,
     selected: false,
     hovered: false,
-    form: 'unaccompanied'
   },
   {
     id: 2,
     name: "plusOneName",
     description: "plusOneDesc",
     short: "plusOneShort",
+    form: 'plusOneForm',
     img: "assets/BotW_Master_Sword_Icon.png",
     info: 2,
     selected: false,
     hovered: false,
-    form: 'with a plus one'
   },
   {
     id: 3,
     name: "familyName",
     description: `familyDesc`,
     short: "familyShort",
+    form: "familyForm",
     img: "assets/BotW_Eightfold_Blade_Icon.png",
     info: "2+",
     selected: false,
     hovered: false,
-    form: 'with my family'
   },
   {
     id: 4,

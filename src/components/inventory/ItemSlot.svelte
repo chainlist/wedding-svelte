@@ -54,6 +54,8 @@
     width: 6.7vw;
     height: 6.7vw;
 
+    user-select: none;
+
     img {
       width: auto;
       max-height: 100%;

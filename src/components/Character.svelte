@@ -2,7 +2,6 @@
 import { onDestroy, onMount } from 'svelte';
 
 import { _ } from 'svelte-i18n';
-import { form } from '../store';
 import { fade } from 'svelte/transition';
 import Writting from './Writting.svelte';
 import { typewriter } from '../utils/transitions/typewriter';
@@ -48,18 +47,7 @@ const travelSelected = travelInventory.selectedCard;
     </div>
   {/if}
 
-  <img src="assets/WhatsApp_Image_2020-06-10_at_20-removebg-preview.png"alt="" on:click={popup.open} />
-  <Popup bind:this={popup}>
-    <h1>Response</h1>
-    <div class="answer">
-      I, hereby, Kévin Guillouard, want to attend the wedding
-      on the 24/04/2021 with all my heart.
-    </div>
-    <div slot="controls" class="controls">
-      <button>Send answer</button>
-      <button on:click={popup.close}>Cancel</button>
-    </div>
-  </Popup>
+  <img src="assets/WhatsApp_Image_2020-06-10_at_20-removebg-preview.png"alt=""/>
 </div>
 
 <style lang="scss">
@@ -108,25 +96,6 @@ const travelSelected = travelInventory.selectedCard;
       height: auto;
       justify-self: flex-end;
       align-self: flex-end;
-    }
-    
-    .answer {
-      margin-top: 1vw;
-      max-width: 25vw;
-      font-size: 2rem;
-    }
-
-    .controls {
-      display: flex;
-      width: 100%;
-      flex-direction: column;
-
-      button:first-child {
-        margin-top: 2vw;
-      }
-      button:not(:last-child) {
-        margin-bottom: 1vw;
-      }
     }
   }
 

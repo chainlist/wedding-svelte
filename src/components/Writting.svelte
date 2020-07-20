@@ -5,21 +5,27 @@
   import { onMount, afterUpdate } from 'svelte';
 
   let element;
+  let letters = [];
+  let letterElement;
   let i = 0;
   let interval = null;
 
   function write(txt, reset = false) {
     if (!element) return;
+    const letters = element.querySelectorAll('span');
+    const letter = letters[i];
   
     if (i < txt.length) {
-      element.innerHTML += txt.charAt(i);
+      letter.classList && letter.classList.remove('visibility');
       i++;
     } else {
       stopWritting();
     }
   }
 
-  $: startWritting(text);
+  $: {
+    startWritting(text);
+  }
 
   onMount(() => startWritting(text));
 
@@ -28,7 +34,8 @@
     if (!element) return;
 
     i = 0;
-    element.innerHTML = '';
+    const letters = element.querySelectorAll('span');
+    letters.forEach(l => l.classList.add('visibility'))
     interval = setInterval(() => write(txt), speed);
   }
 
@@ -37,4 +44,14 @@
   }
 </script>
 
-<span bind:this={element}></span>
+<span bind:this={element}>
+  {#each text as letter}
+    <span class="visibility">{letter}</span> 
+  {/each}
+</span>
+<style lang="scss">
+.visibility {
+  visibility: hidden;
+  color: transparent;
+}
+</style>

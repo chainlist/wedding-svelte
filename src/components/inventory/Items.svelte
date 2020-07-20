@@ -75,6 +75,7 @@
   grid-auto-rows: 6.7vw;
   grid-auto-columns: 6.7vw;
   grid-auto-flow: row;
+  user-select: none;
 
   .controls {
     display: flex;

@@ -1,34 +1,53 @@
 <script>
+  import { fade } from 'svelte/transition';
 	import MenuTop from './components/MenuTop.svelte';
   import Inventory from './components/inventory/Inventory.svelte';
   import Map from './components/Map.svelte';
 	import Character from './components/Character.svelte';
   import MenuBottom from './components/MenuBottom.svelte';
+  import Writting from './components/Writting.svelte';
+
+  import { submittedForm } from './store';
+  import { _ } from 'svelte-i18n';
 </script>
 
-<div id="background"></div>
-<main id="app">
-	<MenuTop/>
-  <Inventory />
-  <Character /> 
-  <MenuBottom />
-</main>
+<div id="background" class:submitted={$submittedForm}></div>
+
+{#if !$submittedForm}
+  <main id="app" transition:fade={{ duration: 1000}}>
+    <MenuTop/>
+    <Inventory />
+    <Character /> 
+    <MenuBottom />
+  </main>
+{:else}
+  <div id="thankyou">
+    <h2><Writting text={$_('thankyou')} speed={100} /></h2>
+    <h4><Writting text={$_('keepposted')} speed={50} /></h4>
+  </div>
+{/if}
 
 <style lang="scss">
 #background{
     position: absolute;
     z-index: -1;
-    // background-image: url("../assets/bg.jpg");
-    // background-image: url("../assets/WhatsApp\ Image\ 2020-06-01\ at\ 01.46.54.jpeg");
     background-image: url("../assets/background.png");
     background-size: cover;
     width: 100%;
     height: 100%;
     filter: blur(15px);
+    transition: filter .250s ease-in-out;
+
+    &.submitted {
+      filter: none;
+    }
 }
 
 
 #app {
+    position: absolute;
+    top: 0;
+    left: 0;
     display: grid;
     width: 100%;
     height: 100%;
@@ -38,6 +57,22 @@
 
     grid-template-rows: 15% 1fr 10%;
     grid-template-columns: 1fr 1fr;
+}
+#thankyou {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-shadow: black 0 0 10px;
+  height: 100%;
+
+  h2 {
+    font-size: 10rem;
+  }
+
+  h4 {
+    font-size: 4rem;
+  }
 }
 
 :global(button) {

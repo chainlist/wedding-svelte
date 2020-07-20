@@ -2,9 +2,9 @@ import { writable, derived } from "svelte/store";
 import { push } from 'svelte-spa-router';
 
 export const submenu = writable([
-  { name: 'guest', img: 'assets/user.png', selected: true },
-  { name: 'travel', img: 'assets/plane.png', selected: false },
-  // { name: 'housing', img: 'assets/house.png', selected: false }
+  { name: 'guest', img: 'assets/user.png', selected: true, hidden: false },
+  { name: 'travel', img: 'assets/plane.png', selected: false, hidden: false },
+  { name: 'form', img: 'assets/form.svg', selected: false, hidden: true }
 ]);
 
 export function selectSubMenu(selectedMenu) {

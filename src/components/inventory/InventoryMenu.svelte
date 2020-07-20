@@ -1,17 +1,33 @@
 
 <script>
+  import { fade } from 'svelte/transition';
   import { _ } from 'svelte-i18n';
   import active from 'svelte-spa-router/active';
   import { submenu, selectSubMenu, selectedSubmenu } from '../../store'
+  import { guestInventory } from '../../store/inventory/guests';
+  import { travelInventory } from '../../store/inventory/travel';
+
+  const hiddenMenu = $submenu.find(m => m.hidden);
+  const guestSelected = guestInventory.selectedCard;
+  const travelSelected = travelInventory.selectedCard;
+
+  $: if ($guestSelected && $travelSelected) {
+    submenu.update(sm => {
+      sm.forEach(sm => sm.hidden = false);
+      return sm;
+    })
+  }
 </script>
 
 <div id="inventory-menu">
   <h2>{$_($selectedSubmenu.name)}</h2>
   <ul id="submenu">
     {#each $submenu as menu}
-      <li use:active={{ path: `/${menu.name}`, className: 'selected' }} on:click={() => selectSubMenu(menu)}>
-        <img src={menu.img} alt="">
-      </li>
+      {#if !menu.hidden }
+        <li use:active={{ path: `/${menu.name}`, className: 'selected' }} class:blink={menu.name === 'form'} on:click={() => selectSubMenu(menu)} transition:fade={{ duration: 150 }}>
+          <img src={menu.img} alt="">
+        </li>
+      {/if}
     {/each}
   </ul>
 </div>
@@ -70,6 +86,10 @@
           opacity: 0;
         }
 
+        &.blink {
+          animation: blink alternate infinite .75s ease-in-out;
+        }
+
         img {
           max-width: auto;
           height: 2.84vw;
@@ -84,6 +104,16 @@
       opacity: 1 !important;
     }
   }
+
+@keyframes blink {
+  from {
+    box-shadow: 0px 0px 10px 5px rgba(#E3E6CF, 1);
+  }
+
+  to {
+    box-shadow: 0px 0px 10px 2px rgba(#E3E6CF, 1);
+  }
+}
 
 @media only screen and (max-width: 768px) {
   #inventory-menu {
@@ -126,9 +156,3 @@
   }
 }
 </style>
-
-<!-- 
-    img {
-          max-width: auto;
-          height: 2.84vw;
-        } -->

@@ -14,9 +14,8 @@ import { guestInventory } from '../store/inventory/guests';
 import { travelInventory } from '../store/inventory/travel';
 
 let popup;
-
-$: hoveredItem = $inventory.hoveredItem;
-$: item = $hoveredItem.item;
+$: hoveredItem = $inventory && $inventory.hoveredItem;
+$: item = $hoveredItem && $hoveredItem.item;
 let subscription = null;
 const guestSelected = guestInventory.selectedCard;
 const travelSelected = travelInventory.selectedCard;
@@ -24,16 +23,32 @@ const travelSelected = travelInventory.selectedCard;
 </script>
 
 <div id="character">
-  <img src="assets/WhatsApp_Image_2020-06-10_at_20-removebg-preview.png"alt="" on:click={popup.open} />
+  <div class="selectedItems">
+    {#if $guestSelected }
+      <div class="selected-item">
+        <img src={$guestSelected.img} alt="">
+        <h2><Writting text={$_($guestSelected.short)} speed={10} /></h2>
+      </div>
+    {/if}
+    {#if $travelSelected && $guestSelected && $guestSelected.id !== 4}
+      <div class="selected-item" transition:fade={{ duration: 150 }}>
+        <img src={$travelSelected.img} alt="">
+        <h2><Writting text={$_($travelSelected.short)} speed={10} /></h2>
+      </div>
+    {/if}
+  </div>
   {#if item}
     <div class="details">
-      <div class="blue-border" />
-          <h1>{$_(item.name)}</h1>
-          <div class="description">
-            <Writting text={$_(item.description)} />
-          </div>
+      <div class="blue-border">
+        <h1>{$_(item.name)}</h1>
+        <div class="description">
+          <Writting text={$_(item.description)} />
+        </div>
+      </div>
     </div>
   {/if}
+
+  <img src="assets/WhatsApp_Image_2020-06-10_at_20-removebg-preview.png"alt="" on:click={popup.open} />
   <Popup bind:this={popup}>
     <h1>Response</h1>
     <div class="answer">
@@ -87,12 +102,8 @@ const travelSelected = travelInventory.selectedCard;
       padding-right: 1vw;
     }
 
-    .formText {
-      color: #0a9af1;
-      font-weight: bold;
-    }
-
-    img {
+    & > img {
+      position: absolute;
       max-width: 50%;
       height: auto;
       justify-self: flex-end;
@@ -180,6 +191,30 @@ const travelSelected = travelInventory.selectedCard;
     border-radius: 2px;
   }
 
+  #character .selectedItems {
+    position: relative;
+    top: 3vw;
+    display: flex;
+    flex-direction: column;
+    
+    .selected-item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 1vw;
+
+      h2 {
+        margin: 0;
+        margin-left: 2vw;
+        text-shadow: rgba(3, 3, 3, .8) 0px 0px 5px;
+      }
+
+      img {
+        width: 55px;
+        height: auto;
+      }
+    }
+  }
 @media only screen and (max-width: 768px) {
   #character {
     background: linear-gradient(

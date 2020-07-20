@@ -3,32 +3,24 @@ import { createInventory } from ".";
 export const travelInventory = createInventory([
   {
     id: 1,
-    name: "loneWarriorName",
-    description: `loneWarriorDesc`,
-    img: "assets/BotW_Ancient_Short_Sword_Icon.png",
+    name: "taxiName",
+    description: `taxiDesc`,
+    short: 'taxiShort',
+    img: "assets/taxi.svg",
     info: 1,
-    selected: true,
+    selected: false,
     hovered: false,
     form: 'by plane'
   },
   {
     id: 3,
-    name: "shieldName",
-    description: `shieldDesc`,
-    img: "assets/shield.png",
-    info: "0",
+    name: "carName",
+    description: `carDesc`,
+    short: 'carShort',
+    img: "assets/car.svg",
+    info: "2",
     selected: false,
     hovered: false,
     form: 'by car'
-  },
-  {
-    id: 2,
-    name: "shieldName",
-    description: `shieldDesc`,
-    img: "assets/BotW_Master_Sword_Icon.png",
-    info: "0",
-    selected: false,
-    hovered: false,
-    form: 'by walk'
   }
 ]);

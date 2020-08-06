@@ -2,8 +2,8 @@
 <script>
   import { fade } from 'svelte/transition';
   import { _ } from 'svelte-i18n';
-  import active from 'svelte-spa-router/active';
-  import { submenu, selectSubMenu, selectedSubmenu } from '../../store'
+  import { location } from 'svelte-spa-router';
+  import { submenuDisplay as submenu, selectSubMenu, selectedSubmenu } from '../../store'
   import { guestInventory } from '../../store/inventory/guests';
   import { travelInventory } from '../../store/inventory/travel';
 
@@ -11,12 +11,21 @@
   const guestSelected = guestInventory.selectedCard;
   const travelSelected = travelInventory.selectedCard;
 
-  $: if ($guestSelected && $travelSelected) {
-    submenu.update(sm => {
-      sm.forEach(sm => sm.hidden = false);
-      return sm;
-    })
+  function active(node, path) {
+    const subscription = location.subscribe((l) => {
+      console.log(l, path);
+      if (l === path) {
+        node.classList.add('selected');
+      } else {
+        node.classList.remove('selected');
+      }
+    });
+
+    return {
+      destroy: subscription
+    }
   }
+  
 </script>
 
 <div id="inventory-menu">
@@ -24,7 +33,7 @@
   <ul id="submenu">
     {#each $submenu as menu}
       {#if !menu.hidden }
-        <li use:active={{ path: `/${menu.name}`, className: 'selected' }} class:blink={menu.name === 'form'} on:click={() => selectSubMenu(menu)} transition:fade={{ duration: 150 }}>
+        <li data-id={menu.selected} class:selected={menu.selected} class:blink={menu.name === 'form'} on:click={() => selectSubMenu(menu)} transition:fade={{ duration: 150 }}>
           <img src={menu.img} alt="">
         </li>
       {/if}

@@ -24,17 +24,6 @@ export const guestInventory = createInventory([
     hovered: false,
   },
   {
-    id: 3,
-    name: "familyName",
-    description: `familyDesc`,
-    short: "familyShort",
-    form: "familyForm",
-    img: "assets/BotW_Eightfold_Blade_Icon.png",
-    info: "2+",
-    selected: false,
-    hovered: false,
-  },
-  {
     id: 4,
     name: "shieldName",
     description: `shieldDesc`,
@@ -46,3 +35,15 @@ export const guestInventory = createInventory([
     form: 'at home'
   },
 ]);
+
+// {
+//   id: 3,
+//   name: "familyName",
+//   description: `familyDesc`,
+//   short: "familyShort",
+//   form: "familyForm",
+//   img: "assets/BotW_Eightfold_Blade_Icon.png",
+//   info: "2+",
+//   selected: false,
+//   hovered: false,
+// },

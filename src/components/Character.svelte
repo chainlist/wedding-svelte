@@ -29,7 +29,7 @@ const travelSelected = travelInventory.selectedCard;
         <h2><Writting text={$_($guestSelected.short)} speed={10} /></h2>
       </div>
     {/if}
-    {#if $travelSelected && $guestSelected && $guestSelected.id !== 4}
+    {#if ($guestSelected && $guestSelected.id !== 4 && $travelSelected) || (!$guestSelected && $travelSelected)}
       <div class="selected-item" transition:fade={{ duration: 150 }}>
         <img src={$travelSelected.img} alt="">
         <h2><Writting text={$_($travelSelected.short)} speed={10} /></h2>
@@ -47,7 +47,7 @@ const travelSelected = travelInventory.selectedCard;
     </div>
   {/if}
 
-  <img src="assets/WhatsApp_Image_2020-06-10_at_20-removebg-preview.png"alt=""/>
+  <img src="assets/00100sPORTRAIT_00100_BURST20200531170931686.png"alt=""/>
 </div>
 
 <style lang="scss">
@@ -230,6 +230,32 @@ const travelSelected = travelInventory.selectedCard;
 
     transition: max-height .2s ease-in-out;
     padding-left: 30px;
+  }
+
+  #character .selectedItems {
+    position: relative;
+    top: 1vh;
+    left: 1vh;
+    display: flex;
+    flex-direction: column;
+    
+    .selected-item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: .25vh;
+
+      h2 {
+        margin: 0;
+        margin-left: 1vh;
+        text-shadow: rgba(3, 3, 3, .8) 0px 0px 5px;
+      }
+
+      img {
+        width: 45px;
+        height: auto;
+      }
+    }
   }
 }
 </style>

@@ -4,7 +4,7 @@
   import Items from './Items.svelte';
   import { push, location } from 'svelte-spa-router';
   import { routes } from '../../routes';
-  import { submenu, selectSubMenu } from '../../store';
+  import { submenuDisplay as submenu, selectSubMenu } from '../../store';
   import { fade } from 'svelte/transition';
 import { playAudio } from '../../utils/playAudio';
 
@@ -12,12 +12,14 @@ import { playAudio } from '../../utils/playAudio';
   let isLast;
   let previous;
   let next;
+  let nextElement;
 
   $: {
     isFirst = $submenu.findIndex(m => `/${m.name}` === $location) === 0;
     isLast = $submenu.findIndex(m => `/${m.name}` === $location) === $submenu.length -1;
 
     const current = $submenu.findIndex(m => `/${m.name}` === $location);
+    nextElement = $submenu[current + 1];
     previous = function() {
       selectSubMenu($submenu[current - 1]);
     }

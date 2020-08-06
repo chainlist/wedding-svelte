@@ -1,5 +1,5 @@
 {
-  "wedding": "Wedding",
+  "wedding": "Save the date",
   "plusOneName": "Plus One",
   "plusOneDesc": "This items let you enjoy the wedding with your chosen plus one",
   "plusOneShort": "I have a plus one",
@@ -21,12 +21,21 @@
   "taxiDesc": "This item let us know you will be coming to the wedding using Taxi / Uber transportation service",
   "taxiShort": "Coming by Taxi / Uber",
   "taxiForm": "taxi or similar transportation service",
-  "carName": "I'm local",
+  "carName": "Crazy driver",
   "carDesc": "You will be coming to the wedding by car. ⚠️ Don't drink and drive ⚠️",
   "carShort": "Coming by car",
   "carForm": "car",
-  "responseComming": "_LASTNAME_ _FIRSTNAME_, will attend the wedding _GUEST_ and I will be coming by _TRAVEL_. With the following additional comment:",
-  "responseNotComming": "_LASTNAME_ _FIRSTNAME_, will not attend the wedding. Additional comment: _COMMENT_",
+  "responseComming": "_LASTNAME_ _FIRSTNAME_, will attend the wedding _GUEST_ and will be coming by _TRAVEL_",
+  "responseNotComming": "_LASTNAME_ _FIRSTNAME_, will not attend the wedding.",
+  "additionalComment": "Additional comment",
   "thankyou": "Thank you ♥",
-  "keepposted": "We will keep you posted"
+  "keepposted": "We will keep you posted, see you on April 24th 2021",
+  "form": "Form",
+  "whoareyou": "Please, tell us who you are",
+  "lastname": "Lastname",
+  "firstname": "Firstname",
+  "comments": "Any comments?",
+  "yourAnswer": "Your answer",
+  "send": "Send",
+  "cancel": "Cancel"
 }

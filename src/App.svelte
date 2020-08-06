@@ -9,6 +9,12 @@
 
   import { submittedForm } from './store';
   import { _ } from 'svelte-i18n';
+  import { push, location } from 'svelte-spa-router';
+
+
+  if ($location === '/') {
+    push('/guest');
+  }
 </script>
 
 <div id="background" class:submitted={$submittedForm}></div>

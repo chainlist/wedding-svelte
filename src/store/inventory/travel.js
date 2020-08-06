@@ -22,6 +22,5 @@ export const travelInventory = createInventory([
     info: "2",
     selected: false,
     hovered: false,
-    form: 'by car'
   }
 ]);
